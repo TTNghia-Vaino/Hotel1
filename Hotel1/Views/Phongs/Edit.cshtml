@@ -26,8 +26,18 @@
 
             <div class="form-group">
                 <label asp-for="Trangthai" class="control-label"></label>
-                <select asp-for="Trangthai" class="form-control" asp-items="ViewBag.TrangthaiItems"></select>
+                <select asp-for="Trangthai" class="form-control">
+                    <option value="Đặt trước">Đặt trước</option>
+                    <option value="Sẵn sàng">Sẵn sàng</option>
+                    <option value="Có khách">Có khách</option>
+                    <option value="Bảo trì">Bảo trì</option>
+                    <option value="Dọn dẹp">Dọn dẹp</option>
+                </select>
                 <span asp-validation-for="Trangthai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ghichu" class="control-label"></label>
+                <input asp-for="Ghichu" class="form-control"/>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -37,7 +47,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Quay lại</a>
 </div>
 
 @section Scripts {

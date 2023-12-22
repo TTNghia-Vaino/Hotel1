@@ -25,17 +25,17 @@ public partial class Khachhang
     public string Diachi { get; set; } = null!;
 
     [Column("PHAI")]
-    public bool Phai { get; set; }
+    public bool? Phai { get; set; } 
 
     [Column("SDT")]
     [StringLength(11)]
     [Unicode(false)]
-    public string Sdt { get; set; } = null!;
+    public string? Sdt { get; set; } = null;
 
     [Column("EMAIL")]
     [StringLength(200)]
     [Unicode(false)]
-    public string Email { get; set; } = null!;
+    public string? Email { get; set; } = null;
 
     [Column("MALK")]
     [StringLength(20)]

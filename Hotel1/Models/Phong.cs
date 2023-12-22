@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotel1.Models;
@@ -13,6 +14,8 @@ public partial class Phong
     [Key]
     [Column("MAPHONG")]
     [StringLength(10)]
+    [Remote("VerifyMaphong", "Phongs", ErrorMessage = "Phòng đã tồn tại.")]
+
     public string Maphong { get; set; } = null!;
 
     [Column("LOAIPHONG")]
@@ -25,7 +28,8 @@ public partial class Phong
 
     [Column("SOLUONGKHACH")]
     public int? Soluongkhach { get; set; }
-
+    [Column("GHICHU")]
+    public string? Ghichu { get; set; } = null;
     [ForeignKey("Loaiphong")]
     [InverseProperty("Phongs")]
     public virtual Loaiphong LoaiphongNavigation { get; set; } = null!;
