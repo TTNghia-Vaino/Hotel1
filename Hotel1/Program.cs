@@ -1,10 +1,15 @@
+using Hotel1.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<DpContext>(opts => {
+    opts.UseSqlServer(
 
+    builder.Configuration["ConnectionStrings:HotelConnection"]);
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,0 +1,45 @@
+﻿@model Hotel1.Models.Phong
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Phong</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Maphong" />
+            <div class="form-group">
+                <label asp-for="Maphong" class="control-label"></label>
+                <input asp-for="Maphong" disabled class="form-control" />
+                <span asp-validation-for="Maphong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Loaiphong" class="control-label"></label>
+                <select asp-for="Loaiphong" class="form-control" asp-items="ViewBag.LoaiphongItems"></select>
+                <span asp-validation-for="Loaiphong" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Trangthai" class="control-label"></label>
+                <select asp-for="Trangthai" class="form-control" asp-items="ViewBag.TrangthaiItems"></select>
+                <span asp-validation-for="Trangthai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
