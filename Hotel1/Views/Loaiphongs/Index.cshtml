@@ -14,10 +14,10 @@
                 Loại phòng
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Soluongtoida)
+                Số lượng phòng tối đa
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Gialoaiphong)
+                Giá loại phòng
             </th>
             <th></th>
         </tr>
@@ -33,7 +33,7 @@
                     @Html.DisplayFor(modelItem => item.Soluongtoida)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Gialoaiphong)
+                    @String.Format("{0:N0}", item.Gialoaiphong)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Malp">Sửa</a> |

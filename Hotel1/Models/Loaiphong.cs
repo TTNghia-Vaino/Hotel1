@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotel1.Models;
@@ -12,6 +13,7 @@ public partial class Loaiphong
     [Key]
     [Column("MALP")]
     [StringLength(10)]
+    [Remote("VerifyMalp", "Loaiphongs", ErrorMessage = "Loại phòng này đã tồn tại")]
     public string Malp { get; set; } = null!;
 
     [Column("SOLUONGTOIDA")]

@@ -27,7 +27,7 @@ public partial class Khachhang
     public string Diachi { get; set; } = null!;
 
     [Column("PHAI")]
-    public bool Phai { get; set; }
+    public bool? Phai { get; set; } 
 
     [Column("SDT")]
     [StringLength(10)]

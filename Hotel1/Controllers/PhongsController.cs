@@ -67,7 +67,7 @@ namespace Hotel1.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "The maximum quantity for this Loaiphong has been reached.");
+                    ModelState.AddModelError(string.Empty, "Loại phòng này đã đạt số lượng tối đa");
                     return View(phong); // Returning the view with the model to show error messages.
                 }
             }
@@ -148,13 +148,13 @@ namespace Hotel1.Controllers
                 return NotFound();
             }
 
-            var phongCount = await _context.Phongs.CountAsync(p => p.Loaiphong == phong.Loaiphong);
+            var phongCount = await _context.Phongs.CountAsync(p => p.Loaiphong == phong.Loaiphong && p.Maphong != phong.Maphong);
 
             if (phongCount < existingLoaiPhong.Soluongtoida)
             {
                 existingPhong.Loaiphong = phong.Loaiphong;
                 existingPhong.Trangthai = phong.Trangthai;
-
+                existingPhong.Ghichu = phong.Ghichu;
                 try
                 {
                     _context.Update(existingPhong);
@@ -163,20 +163,18 @@ namespace Hotel1.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    ModelState.AddModelError(string.Empty, "Error updating the Phong.");
+                    ModelState.AddModelError(string.Empty, "Lỗi khi sửa");
                     // Handle the exception or log the error
                 }
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Số phòng đã đạt tối đa");
+                ModelState.AddModelError(string.Empty, "Số lượng phòng đã đạt tối đa cho loại phòng này.");
             }
-
-            ViewBag.LoaiphongItems = GetLoaiphongItems();
-            ViewBag.TrangthaiItems = GetTrangthaiItems();
 
             return View(phong);
         }
+
 
 
 
@@ -235,10 +233,11 @@ namespace Hotel1.Controllers
 
             if (existingPhong != null)
             {
-                return Json($"Maphong {Maphong} already exists.");
+                return Json($"Phòng {Maphong} đã tồn tại.");
             }
 
             return Json(true);
         }
+
     }
 }

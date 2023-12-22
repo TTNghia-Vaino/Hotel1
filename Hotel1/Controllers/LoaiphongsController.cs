@@ -20,6 +20,7 @@ namespace Hotel1.Controllers
         }
 
         // GET: Loaiphongs
+        // GET: Loaiphongs
         public async Task<IActionResult> Index()
         {
             return _context.Loaiphongs != null ?
@@ -88,6 +89,7 @@ namespace Hotel1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> Edit(string id, [Bind("Malp,Soluongtoida,Gialoaiphong")] Loaiphong loaiphong)
         {
             if (id != loaiphong.Malp)
@@ -97,26 +99,33 @@ namespace Hotel1.Controllers
 
             if (ModelState.IsValid)
             {
+                var existingLoaiphong = await _context.Loaiphongs.FindAsync(id);
+                if (existingLoaiphong == null)
+                {
+                    return NotFound();
+                }
+
                 try
                 {
-                    _context.Update(loaiphong);
+                    // Modify the properties of the existing entity
+                    existingLoaiphong.Malp = loaiphong.Malp; // If you wish to change Malp
+                    existingLoaiphong.Soluongtoida = loaiphong.Soluongtoida;
+                    existingLoaiphong.Gialoaiphong = loaiphong.Gialoaiphong;
+
+                    _context.Update(existingLoaiphong);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LoaiphongExists(loaiphong.Malp))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    ModelState.AddModelError(string.Empty, "Error updating Loaiphong.");
+                    // Log the error or handle the exception
                 }
-                return RedirectToAction(nameof(Index));
             }
+
             return View(loaiphong);
         }
+
 
         // GET: Loaiphongs/Delete/5
         public async Task<IActionResult> Delete(string id)
@@ -155,9 +164,20 @@ namespace Hotel1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LoaiphongExists(string id)
+        
+        [AcceptVerbs("Get", "Post")]
+        public IActionResult VerifyMalp(string Malp)
         {
-            return (_context.Loaiphongs?.Any(e => e.Malp == id)).GetValueOrDefault();
+            // Thực hiện kiểm tra giá trị Malp trong cơ sở dữ liệu
+            // Trả về Json true nếu không trùng, ngược lại trả về Json thông báo lỗi
+            var isMalpValid = _context.Loaiphongs.FirstOrDefault(p => p.Malp == Malp);
+            if (isMalpValid!= null)
+            {
+
+                return Json("Loại phòng đã tồn tại");
+            }
+            return Json(true);
         }
+
     }
 }
